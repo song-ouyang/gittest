@@ -9,4 +9,5 @@ class Pdp extends Model
     protected $table='pdp';
     protected $primaryKey='pdp_id';
     public  $timestamps=false;
-    protected $guarded = [];}
+    protected $guarded = [];
+}

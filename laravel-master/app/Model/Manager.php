@@ -10,4 +10,5 @@ class Manager extends Model
     protected $primaryKey='manager_id';
     public  $timestamps=false;
     protected $guarded = [];
+
 }
