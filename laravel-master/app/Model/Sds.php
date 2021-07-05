@@ -10,4 +10,6 @@ class Sds extends Model
     protected $primaryKey='sds_id';
     public  $timestamps=false;
     protected $guarded = [];
+
+
 }

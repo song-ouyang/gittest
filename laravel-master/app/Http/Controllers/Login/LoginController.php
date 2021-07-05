@@ -77,4 +77,22 @@ class LoginController extends Controller
         $registeredInfo['admin_id'] = $registeredInfo['admin_id'];
         return $registeredInfo;
     }
+
+
+    /**
+     * 保存
+     * @param Request $registeredRequest
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     */
+    public function Baocun(Request $request){
+        $openid = $request['openid'];
+        $address = $request['address'];
+        $data = User::tg_updateAddress($openid,$address);
+        if ($data!=null){
+            return json_success("查找成功",$data,200);
+        }
+        return json_fail("查找失败",$data,100);
+    }
+
 }
