@@ -14,6 +14,7 @@ class Pdp extends Model
     protected $primaryKey='pdp_id';
     public  $timestamps=false;
     protected $guarded = [];
+<<<<<<< HEAD
 
     /***查看pdp结果
      *
@@ -151,4 +152,6 @@ class Pdp extends Model
 
 
 
+=======
+>>>>>>> ad9c9cc9075da28d335976dabf338207df03ed2d
 }

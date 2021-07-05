@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
 
 class user extends Model
@@ -13,6 +14,7 @@ class user extends Model
 protected $table='user';
 protected $primaryKey='user_id';
 public  $timestamps=false;
+<<<<<<< HEAD
 protected $guarded = [];
 
 
@@ -49,5 +51,8 @@ protected $guarded = [];
             return null;
         }
     }
+=======
+protected $guarded = ['user_id'];
+>>>>>>> ad9c9cc9075da28d335976dabf338207df03ed2d
 
 }

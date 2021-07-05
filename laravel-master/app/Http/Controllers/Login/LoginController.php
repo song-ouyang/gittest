@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Login;
+
 use App\Http\Controllers\Controller;
+use App\Model\Manager;
+use App\Model\user;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
