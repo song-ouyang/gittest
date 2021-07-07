@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\Career;
 use http\Client\Curl\User;
-use App\Model\Sds;
+use App\Models\Sds;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class SdsController extends Controller
 {
-<<<<<<< HEAD
-=======
-    //
+
     /***
      * 查询sds测试进行了几次
      * zcr
@@ -64,6 +62,5 @@ class SdsController extends Controller
             json_success('可以再次答题！',$res,200):
             json_fail('申请再次答题失败！',null,100);
     }
->>>>>>> ad9c9cc9075da28d335976dabf338207df03ed2d
 
 }

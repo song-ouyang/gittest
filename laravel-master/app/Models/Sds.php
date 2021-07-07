@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Model;
 
 class Sds extends Model
@@ -12,9 +11,8 @@ class Sds extends Model
     public  $timestamps=false;
     protected $guarded = [];
 
-<<<<<<< HEAD
 
-=======
+
     /***
      * 查询sds测试了几次
      * zcr
@@ -103,5 +101,5 @@ class Sds extends Model
             return false;
         }
     }
->>>>>>> ad9c9cc9075da28d335976dabf338207df03ed2d
+
 }

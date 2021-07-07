@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use http\Exception;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -14,7 +15,6 @@ class Pdp extends Model
     protected $primaryKey='pdp_id';
     public  $timestamps=false;
     protected $guarded = [];
-<<<<<<< HEAD
 
     /***查看pdp结果
      *
@@ -103,8 +103,7 @@ class Pdp extends Model
     public static function add($request){
         try{
             $result=self::create([
-
-                 'user_email'=> $request['user_email'],
+                'user_email'=>$request['user_email'],
                 'tiger_score'=>$request['tiger_score'],
                 'peacock_score'=>$request['peacock_score'],
                 'koala_score'=>$request['koala_score'],
@@ -152,6 +151,4 @@ class Pdp extends Model
 
 
 
-=======
->>>>>>> ad9c9cc9075da28d335976dabf338207df03ed2d
 }

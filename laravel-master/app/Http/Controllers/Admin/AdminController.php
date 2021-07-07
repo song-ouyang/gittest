@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Login;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class AdminController extends Controller
 {
     /**
      * 登录
@@ -17,13 +18,14 @@ class LoginController extends Controller
     {
         try {
             $credentials = self::credentials($loginRequest);
-            if (!$token = auth('api')->attempt($credentials)) {
-                return json_fail(100, '账号或者用户名错误!', null);
+            if (!$token = auth('user')->attempt($credentials)) {
+                return response()->fail(100, '账号或者用户名错误!', null);
             }
+            var_dump(auth('user')->user());
             return self::respondWithToken($token, '登陆成功!');
         } catch (\Exception $e) {
             echo $e->getMessage();
-            return json_fail(500, '登陆失败!', null, 500);
+            return response()->fail(500, '登陆失败!', null, 500);
         }
     }
 
@@ -43,20 +45,40 @@ class LoginController extends Controller
             json_success('注销登陆成功!',null,  200);
     }
 
+    /**
+     * 刷新token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        try {
+            $newToken = auth('user')->refresh();
+        } catch (\Exception $e) {
 
+        }
+        return $newToken != null ?
+            self::respondWithToken($newToken, '刷新成功!') :
+            json_fail(100, null,'刷新token失败!');
+    }
 
     protected function credentials($request)
     {
-        return ['user_email' => $request['user_email'], 'user_pwd' => $request['user_pwd']];
+        return ['phone' => $request['phone'], 'password' => $request['password']];
     }
 
     protected function respondWithToken($token, $msg)
     {
         return json_success( $msg, array(
             'token' => $token,
-            //设置权限 'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'token_type' => 'bearer',
+            'expires_in' => auth('user')->factory()->getTTL() * 60
         ),200);
+    }
+
+    public function test(Request $request){
+        $user  = auth('user')->user();
+
+        echo $user->work_id;
     }
 
     /**
@@ -65,37 +87,19 @@ class LoginController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function registered(Request $registeredRequest)
+    public function registered(AdminRequest $registeredRequest)
     {
         return Admin::createUser(self::userHandle($registeredRequest)) ?
             json_success('注册成功!',null,200  ) :
             json_success('注册失败!',null,100  ) ;
 
     }
-
     protected function userHandle($request)
     {
         $registeredInfo = $request->except('password_confirmation');
         $registeredInfo['password'] = bcrypt($registeredInfo['password']);
-        $registeredInfo['admin_id'] = $registeredInfo['admin_id'];
+        $registeredInfo['phone'] = $registeredInfo['phone'];
         return $registeredInfo;
-    }
-
-
-    /**
-     * 保存
-     * @param Request $registeredRequest
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function Baocun(Request $request){
-        $openid = $request['openid'];
-        $address = $request['address'];
-        $data = User::tg_updateAddress($openid,$address);
-        if ($data!=null){
-            return json_success("查找成功",$data,200);
-        }
-        return json_fail("查找失败",$data,100);
     }
 
 }

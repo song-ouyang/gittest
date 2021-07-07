@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\pdpcheckRequest;
 use App\Http\Requests\pdpRemoveRequest;
 use App\Http\Requests\pdpResultRequest;
-use App\Model\Pdp;
+use App\Models\Pdp;
 use Illuminate\Http\Request;
+
 
 class PdpController extends Controller
 {
@@ -21,13 +22,12 @@ class PdpController extends Controller
 
 
 
-    public function pdpResult(pdpResultRequest $request){
+
+    public function pdpresult(pdpResultRequest $request){
         $date=Pdp::result($request);
-        $date1=Pdp::add($request);
-        dd ($date);
-        dd ($date1);
+        $date1 = Pdp::add($request);
         return $date?
-            json_success('获取成功!',$date,200) :
+            json_success('获取成绩成功!',$date,200) :
             json_fail('获取失败!',null,100);
     }
 
@@ -61,10 +61,11 @@ class PdpController extends Controller
     public function pdpcheck(pdpcheckRequest $request)
     {
         $date=Pdp::pdpdata($request);
-       return $date?
-            json_success('获取成功!',$date,200) :
+         return $date?
+            json_success('获取结果成功!',$date,200) :
             json_fail('获取失败!',null,100);
     }
+
 
     /**
      *   再次答题
@@ -72,13 +73,11 @@ class PdpController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function pdpRemove(pdpRemoveRequest $request){
+    public function pdpremove(pdpRemoveRequest $request){
         $res = Pdp::oys_remove($request);
-        dd($res);
         return $res ?
             json_success('可以再次答题！',$res,200):
             json_fail('申请再次答题失败！',null,100);
     }
-
 
 }

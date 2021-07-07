@@ -26,6 +26,7 @@ class pdpResultRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_email' => 'required',
             'tiger_score' => 'required',
             'peacock_score' => 'required',
             'koala_score' => 'required',
