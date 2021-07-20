@@ -26,20 +26,7 @@ Route::prefix('test')->namespace('Career')->group(function (){
 
 
 
-//测试
-Route::prefix('test')->namespace('Career')->group(function ()
-{
-    //pdp
-    Route::get('pdp/num', 'PdpController@pdpnum');  //查看pdp数量  ok
-    Route::post('pdp/result', 'PdpController@pdpresult'); //查看pdp结果 并且吧东西存入数据库 ok
-    Route::post('pdp/check', 'PdpController@pdpcheck');  //查看有没有写pdp  有就返回那几项结果   xxx 错误的返回值问题
-    Route::post('pdp/remove', 'PdpController@pdpremove');  //查看有没有写pdp  有就返回那几项结果 ok
-    //气质
-    Route::get('Temperament/num', 'TemperamentController@Temperamentnum');  //查看气质的数量  ok
-    Route::post('Temperament/result', 'TemperamentController@Temperamentresult'); //查看气质结果 并且吧东西存入数据库 ok
-    Route::post('Temperament/check', 'TemperamentController@Temperamentcheck');  //查看有没有写temper 有就返回那几项结果 ok
-    Route::post('Temperament/remove', 'TemperamentController@Temperamentremove');  //查看有没有写pdp  有就返回那几项结果 ok
-});
+
 
 
 //后台
