@@ -23,8 +23,13 @@ Route::prefix('test')->namespace('Career')->group(function (){
 });//zcr
 
 
+    Route::get('num','PhpController@pdpNum');//查看完成pdp的人数
+    Route::post('score','PhpController@pdpScore');//录入分数 把分数录入到数据库
+    Route::post('result','PhpController@pdpResult');//查看分数并返回结果
+    Route::post('remove','PhpController@pdpRemove');//点击重做将分数归零
+//wzh
 
-
+Route::view('addd','add');
 
 
 
