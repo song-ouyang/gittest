@@ -22,18 +22,14 @@ Route::prefix('test')->namespace('Career')->group(function (){
    Route::post('sds/remove','SdsController@sdsRemove');//点击重做将分数归零
 });//zcr
 
-
-    Route::get('num','PhpController@pdpNum');//查看完成pdp的人数
-    Route::post('score','PhpController@pdpScore');//录入分数 把分数录入到数据库
-    Route::post('result','PhpController@pdpResult');//查看分数并返回结果
-    Route::post('remove','PhpController@pdpRemove');//点击重做将分数归零
+Route::prefix('test/pdp')->namespace('Career')->group(function () {
+    Route::get('num', 'PdpController@pdpNum');//查看完成pdp的人数
+    Route::post('score', 'PdpController@pdpScore');//录入分数 把分数录入到数据库
+    Route::post('result', 'PdpController@pdpResult');//查看分数并返回结果
+    Route::post('remove', 'PdpController@pdpRemove');//点击重做将分数归零
+});
 //wzh
-
-Route::view('addd','add');
-
-
-
-
+     Route::view('addd', 'add');
 //后台
 Route::prefix('home')->namespace('Admin')->group(function ()
 {
