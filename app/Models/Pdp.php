@@ -19,11 +19,11 @@ class Pdp extends Model
      * wzh
      * @return $res
      */
-    public function wzh_num()
+    public static function wzh_num()
     {
         //利用 try catch语句
         try {
-         $res=pdp::count(); //查询数据库
+         $res=Pdp::count(); //查询数据库
          return $res;  //返回值
         }
         catch (\Exception $e){
@@ -38,7 +38,7 @@ class Pdp extends Model
      * @param Request $request
      * @return $data
      */
-    public function wzh_score($score){
+    public static function wzh_score($score){
         try {
             //录入数据
         $data=self::create(
@@ -64,7 +64,7 @@ class Pdp extends Model
      * @param Request $request
      * @return $res2
      */
-    public function wzh_result($result){
+    public static function wzh_result($result){
         try {
             //调用表单分数
             $tiger=$result->get('tiger_score');
@@ -107,7 +107,7 @@ class Pdp extends Model
      * @param Request $request
      * @return $res3
      */
-    public function wzh_remove($remove){
+    public static function wzh_remove($remove){
         try {
             //更新数据，，清零
             $res = self::where('user_email',$remove['user_email'])->update([
