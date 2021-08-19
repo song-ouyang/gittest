@@ -29,6 +29,13 @@ Route::prefix('test/pdp')->namespace('Career')->group(function () {
     Route::post('remove', 'PdpController@pdpRemove');//点击重做将分数归零
 });
 //wzh
+Route::prefix('test/Tem')->namespace('Career')->group(function (){
+    Route::get('num','TemperamentController@Temnum');//查看气质测试的完成人数
+    Route::post('score','TemperamentController@Temscore');//写入分数
+    Route::post('result','TemperamentController@Temresult');//查看结果并返回
+    Route::post('remove','TemperamentController@Temremove');//点击重做将分数归零
+});
+//gjy
      Route::view('addd', 'add');
 //后台
 Route::prefix('home')->namespace('Admin')->group(function ()
