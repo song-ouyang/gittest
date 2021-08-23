@@ -46,8 +46,8 @@ class PdpController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function pdpResult(pdpresultRequest $request){
-        $res2=pdp::wzh_result($request);//转到model
 
+        $res2=pdp::wzh_result($request);//转到model
         return $res2?   //判断
             json_success("反馈成功",$res2,200):
             json_fail("反馈失败",$res2,100);

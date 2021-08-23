@@ -29,7 +29,7 @@ Route::prefix('test/pdp')->namespace('Career')->group(function () {
     Route::post('remove', 'PdpController@pdpRemove');//点击重做将分数归零
 });
 //wzh
-     Route::view('addd', 'add');
+
 //后台
 Route::prefix('home')->namespace('Admin')->group(function ()
 {
