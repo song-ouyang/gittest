@@ -25,6 +25,7 @@ class  TemperamentScoreRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_email' => 'required',
             'bile_score' => 'required',
             'bloody_score' => 'required',
             'mucus_score' => 'required',

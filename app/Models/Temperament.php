@@ -43,7 +43,6 @@ class Temperament extends Model
 
                 if($sum[$i]>20){
                     array_push($date,"你的典型气质是".$sum[$i]);
-
                 }
                 if($sum[$i]>=10&&$sum[$i]<=20){
                     array_push($date,"你的一般型气质是".$sum[$i]);

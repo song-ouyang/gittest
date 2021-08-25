@@ -22,7 +22,6 @@ Route::prefix('sds')->namespace('Career')->group(function (){
 
 
 
-
 Route::prefix('pdp')->namespace('Career')->group(function () {
     Route::get('num', 'PdpController@pdpNum');//查看完成pdp的人数
     Route::post('score', 'PdpController@pdpScore');//录入分数 把分数录入到数据库
@@ -49,6 +48,16 @@ Route::prefix('home')->namespace('Admin')->group(function ()
 
 
 
+Route::post('login', 'Admin\AuthController@login');
+Route::middleware("auth:api")->namespace('Admin')->group(function () {
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::get('me', 'AuthController@me');
+});
+
+
+
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -59,7 +68,7 @@ Route::prefix('auth')->namespace('Admin')->group(function () {
     Route::post('logout', 'AuthController@logout'); //退出登陆
     Route::post('refresh', 'AuthController@refresh'); //刷新token
     Route::post("regist",'AuthController@registered');//注册
-});//--oys
+});//--oys*/
 
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
