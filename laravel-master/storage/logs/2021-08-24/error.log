@@ -1,0 +1,2 @@
+[2021-08-24 20:12:02] mylog.ERROR: 服务器错误！ ["The POST method is not supported for this route. Supported methods: GET, HEAD."] []
+[2021-08-24 23:54:00] mylog.ERROR: 服务器错误！ ["The GET method is not supported for this route. Supported methods: POST."] []
