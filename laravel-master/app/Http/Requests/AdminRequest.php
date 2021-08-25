@@ -26,8 +26,8 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'account' => 'required|unique:admin,account',
-            'password' =>'required'
+            'manager_email' => 'required|unique:admin,manager_email',
+            'manager_pwd' =>'required'
         ];
     }
 

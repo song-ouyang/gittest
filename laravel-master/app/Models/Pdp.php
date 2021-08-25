@@ -3,12 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use http\Exception;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
-/**
- * @method static create(array $array)
- */
 class Pdp extends Model
 {
     protected $table='pdp';
@@ -16,139 +12,118 @@ class Pdp extends Model
     public  $timestamps=false;
     protected $guarded = [];
 
-    /***查看pdp结果
-     *
-     * @author ouyangsong
-     * @param tiger_score,peacock_score,koala_score,owl_score,chameleon_score
+
+
+    /***
+     * 查看完成pdp的人数
+     * wzh
+     * @return $res
+     */
+    public static function wzh_num()
+    {
+        //利用 try catch语句
+        try {
+         $res=Pdp::count(); //查询数据库
+         return $res;  //返回值
+        }
+        catch (\Exception $e){
+            logError('查询数目失败',[$e->getMessage()]);
+            return false;
+        }
+
+    }
+    /***
+     * 查看完成pdp的人数
+     * wzh
+     * @param Request $request
      * @return $data
      */
-    public static function result($request){
-        try{
-            $tiger_score=$request->get('tiger_score'); //老虎
-            $peacock_score=$request->get('peacock_score'); //孔雀
-            $koala_score=$request->get('koala_score'); //考拉
-            $owl_score=$request->get('owl_score'); //猫头鹰
-            $chameleon_score=$request->get('chameleon_score'); //变色龙
-            $maxscope=max($peacock_score,$koala_score,$owl_score,$tiger_score,$chameleon_score);
-            if($tiger_score==$maxscope)
+    public static function wzh_score($score){
+        try {
+            //录入数据
+        $data=self::create(
+            [   'user_email'=>$score['user_email'],
+                'tiger_score'=>$score['tiger_score'],
+                'peacock_score'=>$score['peacock_score'],
+                'koala_score'=>$score['koala_score'],
+                'owl_score'=>$score['owl_score'],
+                'chameleon_score'=>$score['chameleon_score']
+            ]
+        );
+        //返回值
+        return $data;
+        }
+        catch (\Exception $e){
+            logError('添加失败',[$e->getMessage()]);
+            return false;
+        }
+    }
+    /***
+     * 查看完成pdp的人数
+     * wzh;
+     * @param Request $request
+     * @return $res2
+     */
+    public static function wzh_result($result){
+        try {
+            //调用表单分数
+            $tiger=$result->get('tiger_score');
+            $peacock=$result->get('peacock_score');
+            $koala=$result->get('koala_score');
+            $owl=$result->get('owl_score');
+            $chameleon=$result->get('chameleon_score');
+            $max=max($peacock,$koala,$owl,$tiger,$chameleon);
+            //返回值
+            if($tiger==$max)
             {
                 $date="你的性格是老虎";
             }
-        if($peacock_score==$maxscope)
+            if($peacock==$max)
             {
                 $date="你的性格是孔雀";
             }
-           if($koala_score==$maxscope)
+            if($koala==$max)
             {
                 $date="你的性格是考拉";
             }
-          if($owl_score==$maxscope)
+            if($owl==$max)
             {
                 $date="你的性格是猫头鹰";
             }
-            if($chameleon_score==$maxscope)
+            if($chameleon==$max)
             {
                 $date="你的性格是变色龙";
             }
             return $date;
-        }catch(\Exception $e){
-            logError('获取用户信息错误',[$e->getMessage()]);
-            return null;
         }
-    }
-
-
-    /***查看pdp总数据条数
-     *
-     * @author ouyangsong
-     * @param
-     * @return data
-     */
-    public static function num(){
-        try{
-            $data =self::count();
-            return $data;
-        }catch(\Exception $e){
-            logError('获取用户信息错误',[$e->getMessage()]);
-            return null;
-        }
-    }
-
-
-
-    /***查看的pdp分数
-     *
-     * @author ouyangsong
-     * @param  user_email
-     * @return data
-     */
-    public static function pdpdata($request){
-        try{
-            $data =self::select('tiger_score', 'peacock_score', 'koala_score', 'owl_score', 'chameleon_score')->where('user_email',$request['user_email'])->get();
-            return $data;
-        }catch(\Exception $e){
-            logError('获取用户信息错误',[$e->getMessage()]);
-            return null;
-        }
-    }
-
-
-    /***往pdp表中插入数据
-     *
-     * @author ouyangsong
-     * @param tiger_score,peacock_score,koala_score,owl_score,chameleon_score,email,id
-     * @return $result
-     */
-
-    public static function add($request){
-        try{
-            $result=self::create([
-                'user_email'=>$request['user_email'],
-                'tiger_score'=>$request['tiger_score'],
-                'peacock_score'=>$request['peacock_score'],
-                'koala_score'=>$request['koala_score'],
-                'owl_score'=>$request['owl_score'],
-               'chameleon_score'=>$request['chameleon_score'],
-            ]);
-            return $result;
-        }catch(\Exception $e){
-            logError('添加pdp数据错误',[$e->getMessage()]);
-            return null;
-        }
-    }
-
-
-
-
-
-
-
-    /**允许更还
-     * @author ouyangsong
-     * @param  user_email
-     * @return null
-     */
-
-    public static function oys_remove($remove){
-        try {
-            $res = self::where('user_email',$remove['user_email'])->update([
-                'tiger_score' => null,
-                'peacock_score' => null,
-                'koala_score' => null,
-                'owl_score' => null,
-                'chameleon_score' => null,
-            ]);
-            return $res;
-        }catch (\Exception $e){
-            logError('重置结果失败失败',[$e->getMessage()]);
+        catch (\Exception $e){
+            logError('反馈失败',[$e->getMessage()]);
             return false;
         }
     }
+    /***
+     * 点击重做将分数归零
+     * wzh;
+     * @param Request $request
+     * @return $res3
+     */
+    public static function wzh_remove($remove){
+        try {
+            //更新数据，，清零
+            $res = self::where('user_email',$remove['user_email'])->update([
+            'tiger_score' => null,
+            'peacock_score' => null,
+            'koala_score' => null,
+            'owl_score' => null,
+            'chameleon_score' => null,
+        ]);
+            //返回值
+            return $res;
 
-
-
-
-
-
-
+        }
+        catch (\Exception $e){
+            logError('重做失败',[$e->getMessage()]);
+            return false;
+        }
+    }
 }

@@ -1,12 +1,9 @@
 <?php
-
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class TemperamentResultrequest extends FormRequest
+class TemperamentResultRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,19 +23,12 @@ class TemperamentResultrequest extends FormRequest
     public function rules()
     {
         return [
-            'user_email' => 'required',
+            //
             'bile_score' => 'required',
-         'bloody_score'=> 'required',
-        'mucus_score'=> 'required',
-        'depression_score'=> 'required',
-        'user_email' => 'required',
+            'bloody_score' => 'required',
+            'mucus_score' => 'required',
+            'depression_score' => 'required',
         ];
     }
-
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw (new HttpResponseException(json_fail('参数错误!',$validator->errors()->all(),422)));
-    }
-
 }
+

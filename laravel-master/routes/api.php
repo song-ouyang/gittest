@@ -12,34 +12,31 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::prefix('test')->namespace('Career')->group(function (){
-   Route::get('sds/num','SdsController@sdsNum');//查看sds完成数量 ok
-   Route::post('sds/score','SdsController@sdsScore');//写入分数
-   Route::post('sds/result','SdsController@sdsResult');//查看结果并返回
-   Route::post('sds/remove','SdsController@sdsRemove');//点击重做将分数归零
+
+Route::prefix('sds')->namespace('Career')->group(function (){
+   Route::get('num','SdsController@sdsNum');//查看sds完成数量 ok
+   Route::post('score','SdsController@sdsScore');//写入分数
+   Route::post('result','SdsController@sdsResult');//查看结果并返回
+   Route::post('remove','SdsController@sdsRemove');//点击重做将分数归零
 });//zcr
 
 
 
 
+Route::prefix('pdp')->namespace('Career')->group(function () {
+    Route::get('num', 'PdpController@pdpNum');//查看完成pdp的人数
+    Route::post('score', 'PdpController@pdpScore');//录入分数 把分数录入到数据库
+    Route::post('result', 'PdpController@pdpResult');//查看分数并返回结果
+    Route::post('remove', 'PdpController@pdpRemove');//点击重做将分数归零
+}); //wzh
 
-//测试
-Route::prefix('test')->namespace('Career')->group(function ()
-{
-    //pdp
-    Route::get('pdp/num', 'PdpController@pdpnum');  //查看pdp数量  ok
-    Route::post('pdp/result', 'PdpController@pdpresult'); //查看pdp结果 并且吧东西存入数据库 ok
-    Route::post('pdp/check', 'PdpController@pdpcheck');  //查看有没有写pdp  有就返回那几项结果   xxx 错误的返回值问题
-    Route::post('pdp/remove', 'PdpController@pdpremove');  //查看有没有写pdp  有就返回那几项结果 ok
-    //气质
-    Route::get('Temperament/num', 'TemperamentController@Temperamentnum');  //查看气质的数量  ok
-    Route::post('Temperament/result', 'TemperamentController@Temperamentresult'); //查看气质结果 并且吧东西存入数据库 ok
-    Route::post('Temperament/check', 'TemperamentController@Temperamentcheck');  //查看有没有写temper 有就返回那几项结果 ok
-    Route::post('Temperament/remove', 'TemperamentController@Temperamentremove');  //查看有没有写pdp  有就返回那几项结果 ok
-});
+//气质
+Route::prefix('Tem')->namespace('Career')->group(function (){
+    Route::get('num','TemperamentController@Temnum');//查看气质测试的完成人数
+    Route::post('score','TemperamentController@Temscore');//写入分数
+    Route::post('result','TemperamentController@Temresult');//查看结果并返回
+    Route::post('remove','TemperamentController@Temremove');//点击重做将分数归零
+}); //gjy
 
 
 //后台
@@ -48,13 +45,34 @@ Route::prefix('home')->namespace('Admin')->group(function ()
     Route::post('userdata', 'UserdataController@userdata');  //查看单个用户数据 ok
     Route::get('useralldata', 'UserdataController@useralldata');  //查看所有用户数据 ok
 
+});//oys
+
+
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
 
-//登录
-Route::prefix('user')->namespace('Login')->group(function ()
-{
-    Route::post('login', 'LoginController@login'); //用户登录
-    Route::post('register', 'LoginController@register'); //用户登录
-    Route::post('logout', 'LoginController@logout'); //用户登录
-});
+Route::prefix('auth')->namespace('Admin')->group(function () {
+    Route::post('login', 'AuthController@login'); //登陆
+    Route::post('logout', 'AuthController@logout'); //退出登陆
+    Route::post('refresh', 'AuthController@refresh'); //刷新token
+    Route::post("regist",'AuthController@registered');//注册
+});//--oys
+
+
+Route::prefix('admin')->namespace('Admin')->group(function () {
+    Route::post('login', 'AdminController@login'); //管理员登陆php
+    Route::post('logout', 'AdminController@logout'); //退出登陆
+    Route::post('refresh', 'AdminController@refresh'); //刷新token
+    Route::post("regist",'AdminController@registered');//注册
+});//--oys
+
+Route::prefix('person')->namespace('Person')->group(function () {
+
+    Route::get('test','PersonController@test');
+});//--oys
+
+
+

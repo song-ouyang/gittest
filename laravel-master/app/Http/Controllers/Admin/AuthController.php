@@ -1,14 +1,15 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Models\Login;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
     /**
      * 登录
      * @param Request $loginRequest
@@ -41,8 +42,8 @@ class AuthController extends Controller
 
         }
         return auth('api')->check() ?
-            json_fail('注销登陆失败!', null, 100) :
-            json_success('注销登陆成功!', null, 200);
+            json_fail('注销登陆失败!',null, 100 ) :
+            json_success('注销登陆成功!',null,  200);
     }
 
     /**
@@ -57,26 +58,26 @@ class AuthController extends Controller
         }
         return $newToken != null ?
             self::respondWithToken($newToken, '刷新成功!') :
-            json_fail(100, null, '刷新token失败!');
+            json_fail(100, null,'刷新token失败!');
     }
 
     protected function credentials($request)
     {
-        return ['phone' => $request['phone'], 'password' => $request['password']];
+        //用户登录信息
+        return ['user_name' => $request['user_name'], 'user_pwd' => $request['user_pwd']];
     }
 
     protected function respondWithToken($token, $msg)
     {
-        return json_success($msg, array(
+        return json_success( $msg, array(
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
-        ), 200);
+        ),200);
     }
 
-    public function test(Request $request)
-    {
-        $user = auth('api')->user();
+    public function test(Request $request){
+        $user  = auth('api')->user();
         echo $user->work_id;
     }
 
@@ -89,17 +90,14 @@ class AuthController extends Controller
     public function registered(AuthRequest $registeredRequest)
     {
         return Login::createUser(self::userHandle($registeredRequest)) ?
-            json_success('注册成功!', null, 200) :
-            json_success('注册失败!', null, 100);
+            json_success('注册成功!',null,200  ) :
+            json_success('注册失败!',null,100  ) ;
 
     }
-
     protected function userHandle($request)
     {
         $registeredInfo = $request->except('password_confirmation');
-        $registeredInfo['password'] = bcrypt($registeredInfo['password']);
-        $registeredInfo['phone'] = $registeredInfo['phone'];
+        $registeredInfo['user_pwd'] = bcrypt($registeredInfo['user_pwd']);
         return $registeredInfo;
     }
-
 }

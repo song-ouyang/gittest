@@ -26,8 +26,8 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         return [
-            'account' => 'required',
-            'password' =>'required'
+            'user_name' => 'required|unique:login,user_name',
+            'user_pwd' =>'required'
         ];
     }
 

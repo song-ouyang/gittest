@@ -3,81 +3,66 @@
 namespace App\Http\Controllers\Career;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\pdpcheckRequest;
-use App\Http\Requests\pdpRemoveRequest;
-use App\Http\Requests\pdpResultRequest;
+use App\Http\Requests\pdpscoreRequest;
+use App\Http\Requests\pdpresultRequest;
+use App\Http\Requests\pdpremoveRequest;
 use App\Models\Pdp;
 use Illuminate\Http\Request;
 
 
 class PdpController extends Controller
 {
-
-    /**
-     *    前台给用户显示pdp的结果并且存入数据库
-     * @param \pdpResultRequest
+    /***
+     * 查看完成pdp的人数
+     * wzh
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
+    public function pdpNum(){
+        $res = Pdp::wzh_num();//转到model
+        return $res ?  //判断
+            json_success("查询成功",$res,200):
+            json_fail("查询失败",NULL,100);
 
-
-
-
-    public function pdpresult(pdpResultRequest $request){
-        $date=Pdp::result($request);
-        $date1 = Pdp::add($request);
-        return $date?
-            json_success('获取成绩成功!',$date,200) :
-            json_fail('获取失败!',null,100);
     }
-
-
-
-
-
-
-
-    /**
-     *    获取pdp总共的数据
-     * @param
+    /***
+     * 录入分数 把分数录入到数据库
+     * wzh
+     * @param pdpscoreRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function pdpnum()
-    {
-        $date=Pdp::num();
-        return $date?
-            json_success('获取成功!',$date,200) :
-            json_fail('获取失败!',null,100);
+    public function pdpScore(pdpscoreRequest $request){
+        $res1 = pdp::wzh_score($request);//转到model
+        // if(!$re){
+        //           return '添加失败';}
+        //       return '添加成功';
+        return $res1?   //判断
+            json_success("添加成功",$res1,200):
+            json_fail("添加失败",$res1,100);
     }
-
-
-    /**
-     *   通过邮箱看有没有完成
-     * @param pdpcheckRequest
+    /***
+     * 查看分数并返回结果
+     * wzh
+     * @param pdpresultRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function pdpcheck(pdpcheckRequest $request)
-    {
-        $date=Pdp::pdpdata($request);
-         return $date?
-            json_success('获取结果成功!',$date,200) :
-            json_fail('获取失败!',null,100);
+    public function pdpResult(pdpresultRequest $request){
+        $res2=pdp::wzh_result($request);//转到model
+
+        return $res2?   //判断
+            json_success("反馈成功",$res2,200):
+            json_fail("反馈失败",$res2,100);
     }
-
-
-    /**
-     *   再次答题
-     * @param pdpRemoveRequest
+    /***
+     * 点击重做将分数归零
+     * wzh
+     * @param pdpremoveRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function pdpremove(pdpRemoveRequest $request){
-        $res = Pdp::oys_remove($request);
-        return $res ?
-            json_success('可以再次答题！',$res,200):
-            json_fail('申请再次答题失败！',null,100);
-    }
+    public function pdpRemove(pdpremoveRequest $request){
+        $res3=pdp::wzh_remove($request);//转到model
 
+        return $res3?   //判断
+            json_success("更新成功",$res3,200):
+            json_fail("更新失败",$res3,100);
+    }
 }

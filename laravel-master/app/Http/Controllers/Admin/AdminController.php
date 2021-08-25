@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 
+
+
 class AdminController extends Controller
 {
+
     /**
      * 登录
      * @param Request $loginRequest
@@ -63,7 +68,7 @@ class AdminController extends Controller
 
     protected function credentials($request)
     {
-        return ['phone' => $request['phone'], 'password' => $request['password']];
+        return ['user_name' => $request['user_name'], 'user_pwd' => $request['user_pwd']];
     }
 
     protected function respondWithToken($token, $msg)
@@ -94,6 +99,7 @@ class AdminController extends Controller
             json_success('注册失败!',null,100  ) ;
 
     }
+
     protected function userHandle($request)
     {
         $registeredInfo = $request->except('password_confirmation');
@@ -101,5 +107,4 @@ class AdminController extends Controller
         $registeredInfo['phone'] = $registeredInfo['phone'];
         return $registeredInfo;
     }
-
 }

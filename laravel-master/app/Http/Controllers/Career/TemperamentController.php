@@ -3,77 +3,58 @@
 namespace App\Http\Controllers\Career;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Temperamentcheckrequest;
 use App\Http\Requests\TemperamentRemoveRequest;
-use App\Http\Requests\TemperamentResultrequest;
+use App\Http\Requests\TemperamentResultRequest;
+use App\Http\Requests\TemperamentScoreRequest;
 use App\Models\Temperament;
-use Illuminate\Http\Request;
-
 class TemperamentController extends Controller
 {
-
-
-    /**
-     *  获取Temperament总共的数据
-     * @param
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+    /***
+     * 查询进行几次气质测试
+     * gujiayu
+     *  @return \Illuminate\Http\JsonResponse
      */
-    public function Temperamentnum()
-    {
-        $date=Temperament::num();
-        return $date?
-            json_success('获取成功!',$date,200) :
-            json_fail('获取失败!',null,100);
+    public function Temnum(){
+        $res = Temperament::gjy_num();
+        return $res ?
+            json_success('查询成功！',$res,200):
+            json_fail('查询失败',null,100);
+    }
+    /***
+     * 添加成绩
+     * gujiayu
+     * @param TemperamentScoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function Temscore(TemperamentScoreRequest $request){
+        $res = Temperament::gjy_score($request);
+        return $res ?
+            json_success('查询成功！',$res,200):
+            json_fail('查询失败',null,100);
+    }
+    /***
+     * 返回气质测试结果
+     * gujiayu
+     * @param TemperamentResultRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function Temresult(TemperamentResultRequest $request){
+        $res = Temperament::gjy_result($request);
+        return $res ?
+            json_success('返回结果成功！',$res,200):
+            json_fail('返回结果失败',null,100);
     }
 
-
-
-
-
-    /**
-     *  获取Temperament的分
-     * @param \Temperamentcheckrequest
+    /***
+     * 申请再次答题
+     * gujiayu
+     * @param TemperamentRemoveRequest $request
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      */
-    public function Temperamentcheck(Temperamentcheckrequest $request)
-    {
-        $date=Temperament::data($request);
-        return $date?
-            json_success('获取成功!',$date,200) :
-            json_fail('获取失败!',null,100);
+    public function Temremove(TemperamentRemoveRequest $request){
+        $res = Temperament::gjy_remove($request);
+        return $res ?
+            json_success('可以再次答题！',$res,200):
+            json_fail('申请再次答题失败！',null,100);
     }
-
-
-
-    /**
-     *  显示Temperament的结果并且存入数据库
-     * @param \TemperamentResultrequest
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     */
-    public function Temperamentresult(TemperamentResultrequest  $request)
-    {
-       $date=Temperament::result($request);
-        $date1=Temperament::add($request);
-        return $date?
-            json_success('获取成功!',$date,200) :
-            json_fail('获取失败!',null,100);
-    }
-
-
-
-/**
- *   再次答题
- * @param \TemperamentRemoveRequest
- * @return \Illuminate\Http\JsonResponse
- * @throws \Exception
- */
-public function Temperamentremove(TemperamentRemoveRequest $request){
-    $res = Temperament::oys_remove($request);
-    return $res ?
-        json_success('可以再次答题！',$res,200):
-        json_fail('申请再次答题失败！',null,100);
-}
 }

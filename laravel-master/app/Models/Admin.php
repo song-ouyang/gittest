@@ -12,12 +12,11 @@ class Admin extends Model
     protected $guarded = [];
 
 
-
-
     public function getJWTCustomClaims()
     {
         return [];
     }
+
     public function getJWTIdentifier()
     {
         return self::getKey();
@@ -42,28 +41,6 @@ class Admin extends Model
             return null;
         }
     }
-
-
-    /**
-     * 根据管理员用户id获取用户信息
-     * @param $UserId
-     * @param array $array
-     * @return mixed
-     * @throws \Exception
-     */
-    public static function getUserInfo($UserId, $array = [])
-    {
-        try {
-            return $array == null ?
-                self::where('id', $UserId)->get() :
-                self::where('id', $UserId)->get($array);
-        } catch (\Exception $e) {
-            logError('用户获取失败',[$e->getMessage()]);
-            return null;
-
-        }
-    }
-
 
 
 
