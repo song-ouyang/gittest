@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class SdsScoreRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class SdsScoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,16 +27,17 @@ class SdsScoreRequest extends FormRequest
     {
         return [
             'user_email' => 'required',
-<<<<<<< HEAD:app/Http/Requests/SdsScoreRequest.php
-                'reality_score' => 'required',
-=======
             'reality_score' => 'required',
->>>>>>> f989bf86f5a705c01d9a842f59edb722fea3a85d:laravel-master/app/Http/Requests/Temperamentcheckrequest.php
             'research_score' => 'required',
             'art_score' => 'required',
             'society_score' => 'required',
             'enterprise_score' => 'required',
             'tradition_score' => 'required',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw (new HttpResponseException(json_fail('参数错误!',$validator->errors()->all(),422)));
     }
 }

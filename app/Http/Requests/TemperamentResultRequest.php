@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class TemperamentResultRequest extends FormRequest
 {
@@ -30,5 +32,10 @@ class TemperamentResultRequest extends FormRequest
             'depression_score' => 'required',
         ];
     }
+    protected function failedValidation(Validator $validator)
+    {
+        throw (new HttpResponseException(json_fail('参数错误!',$validator->errors()->all(),422)));
+    }
+
 }
 

@@ -2,17 +2,12 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-<<<<<<< HEAD
+
 class SdsResultRequest extends FormRequest
-=======
-<<<<<<<< HEAD:laravel-master/app/Http/Requests/pdpRemoveRequest.php
-class pdpremoveRequest extends FormRequest
-========
-class SdsResultRequest extends FormRequest
->>>>>>>> f989bf86f5a705c01d9a842f59edb722fea3a85d:app/Http/Requests/SdsResultRequest.php
->>>>>>> f989bf86f5a705c01d9a842f59edb722fea3a85d
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,7 +16,7 @@ class SdsResultRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -35,4 +30,10 @@ class SdsResultRequest extends FormRequest
             'user_email' => 'required',
         ];
     }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw (new HttpResponseException(json_fail('参数错误!',$validator->errors()->all(),422)));
+    }
+
 }

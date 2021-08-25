@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Career;
+use App\Http\Requests\SdsResultRequest;
+use App\Http\Requests\SdsScoreRequest;
 use http\Client\Curl\User;
 use App\Models\Sds;
 use App\Http\Controllers\Controller;
@@ -27,11 +29,8 @@ class SdsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sdsScore(Request $request){
+    public function sdsScore(SdsScoreRequest $request){
         $res1 = Sds::zcr_score($request);
-        /*if($res1){
-            $res2 = User::zcr_sds($res1);
-        }*/
         return $res1 ?
             json_success('添加成绩成功！',$res1,200):
             json_fail('添加成绩失败',null,100);
@@ -43,10 +42,10 @@ class SdsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function sdsResult(Request $request){
-        $res = Sds::zcr_result($request);
-        return $res ?
-            json_success('返回结果成功！',$res,200):
+    public function sdsResult(SdsResultRequest $request){
+        $res2 = Sds::zcr_result($request);
+        return $res2 ?
+            json_success('返回结果成功！',$res2,200):
             json_fail('返回结果失败',null,100);
     }
 
@@ -57,9 +56,9 @@ class SdsController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function sdsRemove(Request $request){
-        $res = Sds::zcr_remove($request);
-        return $res ?
-            json_success('可以再次答题！',$res,200):
+        $res3 = Sds::zcr_remove($request);
+        return $res3 ?
+            json_success('可以再次答题！',$res3,200):
             json_fail('申请再次答题失败！',null,100);
     }
 
