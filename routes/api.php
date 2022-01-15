@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Illuminate\Http\Request;
 
@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+//aaa
 Route::prefix('sds')->namespace('Career')->group(function (){
    Route::get('num','SdsController@sdsNum');//查看sds完成数量 ok
    Route::post('score','SdsController@sdsScore');//写入分数
